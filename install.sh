@@ -1,34 +1,50 @@
 #!/bin/bash
 
-# Vérifie si Homebrew est installé, sinon l'installe
+# Install Homebrew if not installed
 if test ! $(which brew); then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Met à jour Homebrew
+# Update Homebrew
 brew update
 
-# Liste des applications à installer avec Brew
+if test ! $(which pip); then
+    brew install python
+fi
+
+if test ! $(which npm); then
+    brew install npm
+fi
+
+# List of apps to install with brew
 apps=(
     git
     node
     python3
     ruby
     php
+    composer
+    mysql
+    postgresql
+    docker
 )
 
-# Installe les applications
+# Installs apps
 brew install ${apps[@]}
 
-# Liste des applications à installer avec Brew Cask
+# List of apps to install with brew cask
 cask_apps=(
     postman
+    visual-studio-code
+    iterm2
+    google-chrome
+    firefox
 )
 
-# Installe les applications
+# Installs apps
 brew install --cask ${cask_apps[@]}
 
-# Installe oh-my-zsh
+# Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "Installation terminée"
